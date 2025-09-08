@@ -26,6 +26,8 @@ Este projeto tem como missão:
 
 <img src="https://media.discordapp.net/attachments/1375547286532264000/1414666563679948820/Captura_de_tela_2025-09-08_143937.png?ex=68c06668&is=68bf14e8&hm=66d78333406960f0cc298e77e233052a12f2b2fe380fb0e473b5a0493dc03560&=&format=webp&quality=lossless&width=1872&height=733" alt="trello"></img>
 
+https://trello.com/b/8QGMvlDE/equipe-5
+
 # 👥Equipe
 
 João Guilherme Grimaldi- Product Owner
