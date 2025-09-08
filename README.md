@@ -25,3 +25,17 @@ Este projeto tem como missão:
 # Trello
 
 <img src="https://media.discordapp.net/attachments/1375547286532264000/1414666563679948820/Captura_de_tela_2025-09-08_143937.png?ex=68c06668&is=68bf14e8&hm=66d78333406960f0cc298e77e233052a12f2b2fe380fb0e473b5a0493dc03560&=&format=webp&quality=lossless&width=1872&height=733" alt="trello"></img>
+
+# 👥Equipe
+
+João Guilherme Grimaldi- Product Owner
+
+Davi Nogueira- Scrum Master
+
+Leandro Cisneiros- Desenvolvedor
+
+Giuliano Marques- Desenvolvedor
+
+Bernardo Pedrosa- Desenvolvedor
+
+Paulo Henrique- Desenvolvedor
