@@ -12,6 +12,9 @@ Nos últimos anos, com a transformação digital e mudanças nos algoritmos do G
 
 Apesar dos investimentos em tecnologia e UX/UI, ainda é necessário um olhar inovador para aumentar retenção, estimular navegação contínua e fortalecer a audiência recorrente.
 
+Assista ao vídeo para olhar o protótipo!
+[![Vídeo apresentação](https://img.youtube.com/vi/3abl36UdnpI/0.jpg)](https://www.youtube.com/watch?v=3abl36UdnpI)
+
 ## 🎯 Objetivo
 
 Este projeto tem como missão:
@@ -32,8 +35,6 @@ _clique na imagem para acessar_
 [<img width="1282" height="843" alt="Captura de tela 2025-09-22 183852" src="https://github.com/user-attachments/assets/0b3af28b-b2c9-4952-a185-310be2d9a0d2" alt="Diagrama de atividades"/>](https://www.figma.com/board/mF6NNa4LdqjyFhooVBUAQ1/Sem-t%C3%ADtulo?node-id=0-1&t=RYKcdJbjjvjZWvEX-1)
 _clique na imagem para acessar_
 
-## Vídeo apresentando protótipo
-[![Vídeo apresentação](https://img.youtube.com/vi/3abl36UdnpI/0.jpg)](https://www.youtube.com/watch?v=3abl36UdnpI)
 
 ## 👥Equipe
 ```md
