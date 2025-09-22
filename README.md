@@ -35,9 +35,6 @@ _clique na imagem para acessar_
 ## Vídeo apresentando protótipo
 [![Vídeo apresentação](https://img.youtube.com/vi/3abl36UdnpI/0.jpg)](https://www.youtube.com/watch?v=3abl36UdnpI)
 
-## Tela de cadastro/login
-<img width="385" height="668" alt="image" src="https://github.com/user-attachments/assets/8c85c281-7b51-457d-b6b4-2135e7c56ac3" />
-
 ## 👥Equipe
 ```md
 * João Guilherme Grimaldi - Product Owner
