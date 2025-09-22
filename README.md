@@ -39,8 +39,8 @@ _clique na imagem para acessar_
 ```md
 * João Guilherme Grimaldi - Product Owner
 * Davi Nogueira           - Scrum Master
-* Leandro Cisneiros       - Desenvolvedor
-* Giuliano Marques        - Desenvolvedor
-* Bernardo Pedrosa        - Desenvolvedor
-* Paulo Henrique          - Desenvolvedor
+* Leandro Cisneiros       - Desenvolvedor FullStack
+* Giuliano Marques        - Desenvolvedor UI/UX Frontend
+* Bernardo Pedrosa        - Desenvolvedor Back end
+* Paulo Henrique          - Desenvolvedor QA
 ```
