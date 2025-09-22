@@ -42,6 +42,5 @@ _clique na imagem para acessar_
 * Leandro Cisneiros       - Desenvolvedor
 * Giuliano Marques        - Desenvolvedor
 * Bernardo Pedrosa        - Desenvolvedor
+* Paulo Henrique          - Desenvolvedor
 ```
-
-Paulo Henrique- Desenvolvedor
