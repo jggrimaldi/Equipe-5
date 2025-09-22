@@ -24,7 +24,7 @@ Este projeto tem como missão:
 
 ## Trello
 
-[<img src="https://media.discordapp.net/attachments/992910018884157512/1414757547109253210/Captura_de_tela_2025-09-08_204055.png?ex=68c0bb24&is=68bf69a4&hm=2553161dee36b7b6fb7b1f9e82644f44a1c3b417a4f69ab0c70e8efe1b5f104c&=&format=webp&quality=lossless&width=1836&height=665" alt="trello"></img>(https://trello.com/b/8QGMvlDE/equipe-5
+[<img src="https://media.discordapp.net/attachments/992910018884157512/1414757547109253210/Captura_de_tela_2025-09-08_204055.png?ex=68c0bb24&is=68bf69a4&hm=2553161dee36b7b6fb7b1f9e82644f44a1c3b417a4f69ab0c70e8efe1b5f104c&=&format=webp&quality=lossless&width=1836&height=665" alt="trello"/>](https://trello.com/b/8QGMvlDE/equipe-5
 )
 _clique na imagem para acessar_
 
