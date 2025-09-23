@@ -1,4 +1,6 @@
-## 📌 Contexto
+<img width="645" height="387" alt="image-removebg-preview" src="https://github.com/user-attachments/assets/70d18d0a-b656-4f6b-839b-86bf516668c8" />
+
+# 📌 Sistema Jornal do Commercio de Comunicação - Segundo clique 
 
 O Sistema Jornal do Commercio de Comunicação (SJCC) é um dos principais ecossistemas de mídia do Nordeste, reunindo o Jornal do Commercio, TV Jornal, Rádio Jornal e diversos produtos digitais.
 
