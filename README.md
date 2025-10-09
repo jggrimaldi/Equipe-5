@@ -47,4 +47,5 @@ _clique na imagem para acessar_
 * Giuliano Marques        - Desenvolvedor UI/UX Frontend
 * Bernardo Pedrosa        - Desenvolvedor Back end
 * Paulo Henrique          - Desenvolvedor QA
+* Kaiki Nattan            - Desenvolvedor Fullstack
 ```
