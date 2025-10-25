@@ -85,21 +85,16 @@ export default function NewsEditor() {
     if (!editorRef) return;
 
     try {
+      // serialize editor content to Markdown (GFM)
       const md = editorRef.getApi(MarkdownPlugin).markdown.serialize();
-      const lines = md
-        .split(/\r?\n/)
-        .map((l: string) => l.trim())
-        .filter(Boolean);
-      const title = lines.length ? lines[0].slice(0, 255) : "Untitled";
 
-      const { error } = await supabase
-        .from("articles")
-        .insert({
-          title,
-          content: md,
-        })
-        .select()
-        .single();
+      // derive title from first non-empty markdown line
+      const lines = md.split(/\r?\n/).map((l: string) => l.trim()).filter(Boolean);
+      const title = lines.length ? String(lines[0]).slice(0, 255) : 'Untitled';
+
+      const id = (globalThis as any).crypto?.randomUUID ? (globalThis as any).crypto.randomUUID() : Math.random().toString(36).slice(2, 10);
+
+      const { error } = await supabase.from('articles').insert({ id, title, content: md }).select().single();
 
       if (error) {
         console.error("Insert error", error);

@@ -5,8 +5,9 @@ import Image from "next/image";
 import Logo from "../../public/logo.png";
 import { supabase, Article } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
-import Markdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import Link from 'next/link';
+import Markdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 const Home = () => {
   const [articles, setArticles] = React.useState<Article[]>([]);
   const [loading, setLoading] = React.useState(false);
@@ -50,6 +51,7 @@ const Home = () => {
         </div>
         <div>
           <button
+          data-testid="criar-noticia"
             onClick={() => router.push("/new-article")}
             className="bg-red-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-red-700"
           >
@@ -73,10 +75,10 @@ const Home = () => {
           )}
 
           {articles.map((a) => (
-            <article
-              key={a.id}
-              className="bg-white rounded-lg shadow-sm overflow-hidden border border-border"
-            >
+            <Link key={a.id} href={`/articles/${a.id}`} data-testid="noticia" className="no-underline">
+              <article
+                className="bg-white rounded-lg shadow-sm overflow-hidden border border-border"
+              >
               <div className="h-40 bg-gray-100 w-full relative">
                 {a.image_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -105,7 +107,8 @@ const Home = () => {
                   </div>
                 </div>
               </div>
-            </article>
+              </article>
+            </Link>
           ))}
         </div>
       </main>
