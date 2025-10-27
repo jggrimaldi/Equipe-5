@@ -41,8 +41,7 @@ _clique na imagem para acessar_
 _clique na imagem para acessar_
 
 ## Programação em par
-<img width="596" height="795" alt="image" src="https://github.com/user-attachments/assets/33b3d8d4-8524-41c4-88d8-c17c6db17a12" />
-## Metodologia: Programação em Par
+<img width="596" height="795" alt="image" src="https://github.com/user-attachments/assets/33b3d8d4-8524-41c4-88d8-c17c6db17a12" />   
 Nós aplicamos a Programação em Par (Pair Programming) para otimizar o desenvolvimento e garantir a qualidade do código.
 
 Fizemos assim:
