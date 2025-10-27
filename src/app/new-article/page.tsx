@@ -5,6 +5,7 @@ import {
   DefaultChatTransport,
   lastAssistantMessageIsCompleteWithToolCalls,
 } from "ai";
+import {Streamdown} from "streamdown"
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -134,7 +135,7 @@ export default function NewsEditor() {
           <PlateEditor onEditor={handleEditor} onChange={handleEditorChange} />
         </div>
 
-        <aside className="flex-[1] bg-gray-50 border-l border-gray-200 p-4">
+        <aside className="flex-[1] overflow-auto bg-gray-50 border-l border-gray-200 p-4">
           <Tabs defaultValue="chat" className="h-full flex flex-col">
             <TabsList className="grid w-full grid-cols-3">
               <TabsTrigger value="chat">Chat</TabsTrigger>
@@ -167,6 +168,7 @@ export default function NewsEditor() {
                                 : "bg-white border border-gray-100"
                             }`}
                           >
+                            {message.role === "assistant" ? <Streamdown>{part.text}</Streamdown> : part.text} 
                             {part.text}
                           </div>
                         );
