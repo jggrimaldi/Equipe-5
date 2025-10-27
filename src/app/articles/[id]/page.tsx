@@ -110,12 +110,10 @@ export default function ArticlePage() {
         <aside className="col-span-1">
           <div className="bg-white rounded-lg p-4 border border-gray-100 shadow-sm">
             <h3 className="font-medium mb-3">Demografia</h3>
-            <div className="text-sm text-gray-500">(placeholder for charts)</div>
           </div>
 
           <div className="bg-white rounded-lg p-4 border border-gray-100 shadow-sm mt-4">
             <h3 className="font-medium mb-3">Horários de Pico</h3>
-            <div className="text-sm text-gray-500">(placeholder for bar chart)</div>
           </div>
         </aside>
       </div>
