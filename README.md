@@ -40,6 +40,17 @@ _clique na imagem para acessar_
 [<img width="1282" height="843" alt="Captura de tela 2025-09-22 183852" src="https://github.com/user-attachments/assets/0b3af28b-b2c9-4952-a185-310be2d9a0d2" alt="Diagrama de atividades"/>](https://www.figma.com/board/mF6NNa4LdqjyFhooVBUAQ1/Sem-t%C3%ADtulo?node-id=0-1&t=RYKcdJbjjvjZWvEX-1)
 _clique na imagem para acessar_
 
+## Programação em par
+<img width="596" height="795" alt="image" src="https://github.com/user-attachments/assets/33b3d8d4-8524-41c4-88d8-c17c6db17a12" />
+## Metodologia: Programação em Par
+Nós aplicamos a Programação em Par (Pair Programming) para otimizar o desenvolvimento e garantir a qualidade do código.
+
+Fizemos assim:
+
+* Utilizamos o formato de **Piloto** (quem digita o código) e **Navegador** (quem revisa e guia a lógica).
+* Usamos o VS Code como IDE.
+* Aproveitamos para implementar as histórias de forma direta.
+* Os papéis eram trocados a cada 30 minutos para manter deixar todos felizes.
 
 ## 👥Equipe
 ```md
