@@ -14,8 +14,11 @@ Nos últimos anos, com a transformação digital e mudanças nos algoritmos do G
 
 Apesar dos investimentos em tecnologia e UX/UI, ainda é necessário um olhar inovador para aumentar retenção, estimular navegação contínua e fortalecer a audiência recorrente.
 
-Assista ao vídeo para olhar o protótipo!
-[![Vídeo apresentação](https://img.youtube.com/vi/3abl36UdnpI/0.jpg)](https://www.youtube.com/watch?v=3abl36UdnpI)
+## Deploy
+[![Vídeo apresentação](https://github.com/user-attachments/assets/39f8eda6-412a-4d51-b626-da8a6b07ba9c)](https://equipe-5-vert.vercel.app)
+
+## Apresentação da aplicação (em construção)
+[![Vídeo apresentação](https://github.com/user-attachments/assets/70ad7932-8d16-467c-8072-23ffd78f1fca)](https://www.youtube.com/watch?v=kju_7s9wYoE)
 
 ## 🎯 Objetivo
 
@@ -27,10 +30,9 @@ Este projeto tem como missão:
 
 ✅ Fortalecer a audiência recorrente e a atratividade para anunciantes.
 
-## Trello
+## Taiga
 
-[<img width="1902" height="692" alt="image" src="https://github.com/user-attachments/assets/63649a72-5349-40d4-afe6-94643515c55c" />](https://trello.com/b/8QGMvlDE/equipe-5)
-
+[<img width="1902" height="692" alt="image" src="https://github.com/user-attachments/assets/1f0e573f-799b-4e23-a30a-8cc840036115" />](https://tree.taiga.io/project/jggrimaldi-desafio-sjcc/kanban)
 
 _clique na imagem para acessar_
 
@@ -49,3 +51,5 @@ _clique na imagem para acessar_
 * Paulo Henrique          - Desenvolvedor QA
 * Kaiki Nattan            - Desenvolvedor Fullstack
 ```
+
+
