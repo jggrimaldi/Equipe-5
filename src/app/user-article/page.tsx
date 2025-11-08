@@ -2,16 +2,21 @@
 
 import React from "react";
 import Image from "next/image";
-import Logo from "../../public/logo.png";
+import Logo from "../../../public/logo.png";
 import { supabase, Article } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import Link from 'next/link';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-const Home = () => {
+import { useUserTracking } from "@/hooks/use-user-tracking";
+
+const UserArticles = () => {
   const [articles, setArticles] = React.useState<Article[]>([]);
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();
+  
+  // Initialize user tracking (without article ID, just tracks visit to page)
+  const { userId } = useUserTracking();
 
   React.useEffect(() => {
     let mounted = true;
@@ -49,15 +54,6 @@ const Home = () => {
           <Image src={Logo} alt="Logo" width={140} />
           <h1 className="text-lg font-semibold">Notícias Publicadas</h1>
         </div>
-        <div>
-          <button
-          data-testid="criar-noticia"
-            onClick={() => router.push("/new-article")}
-            className="bg-red-600 text-white px-4 py-2 rounded-md shadow-md hover:bg-red-700"
-          >
-            + Criar Nova Noticia
-          </button>
-        </div>
       </header>
 
       <main className="mx-auto max-w-7xl px-8 py-12">
@@ -75,7 +71,7 @@ const Home = () => {
           )}
 
           {articles.map((a) => (
-            <Link key={a.id} href={`/articles/${a.id}`} data-testid="noticia" className="no-underline">
+            <Link key={a.id} href={`/user-article/${a.id}`} data-testid="noticia" className="no-underline">
               <article
                 className="bg-white rounded-lg shadow-sm overflow-hidden border border-border"
               >
@@ -116,4 +112,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default UserArticles;

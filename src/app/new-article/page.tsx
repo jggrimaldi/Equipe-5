@@ -16,6 +16,16 @@ import { useChat } from "@ai-sdk/react";
 import { supabase } from "@/lib/supabaseClient";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogFooter,
+} from '@/components/ui/dialog';
+import { useId } from 'react';
 
 export default function NewsEditor() {
   const [input, setInput] = useState("");
@@ -108,6 +118,79 @@ export default function NewsEditor() {
       alert("Unexpected error saving article");
     }
   };
+
+  // Generate Video dialog state
+  const [openGenerate, setOpenGenerate] = React.useState(false);
+  const [images, setImages] = React.useState<Array<{ id: string; file: File; preview: string }>>([]);
+  const [generating, setGenerating] = React.useState(false);
+
+  const fileInputId = useId();
+
+  const onAddFiles = (files: FileList | null) => {
+    if (!files) return;
+    const arr = Array.from(files).map((f) => ({ id: Math.random().toString(36).slice(2,9), file: f, preview: URL.createObjectURL(f) }));
+    setImages((s) => [...s, ...arr]);
+  };
+
+  const moveImage = (index: number, dir: -1 | 1) => {
+    setImages((prev) => {
+      const next = [...prev];
+      const i = index;
+      const j = index + dir;
+      if (j < 0 || j >= next.length) return prev;
+      const tmp = next[i];
+      next[i] = next[j];
+      next[j] = tmp;
+      return next;
+    });
+  };
+
+  const removeImage = (id: string) => {
+    setImages((s) => s.filter((x) => x.id !== id));
+  };
+
+  const handleGenerate = async () => {
+    if (!editorRef) {
+      alert('Editor not ready');
+      return;
+    }
+
+    setGenerating(true);
+    try {
+      const md = editorRef.getApi(MarkdownPlugin).markdown.serialize();
+
+      const form = new FormData();
+      form.append('content', md);
+
+      // append images in order preserving order
+      images.forEach((img, idx) => {
+        // key 'images' repeated preserves order on server
+        form.append('images', img.file, img.file.name || `image-${idx}`);
+        form.append('image_order[]', String(idx));
+      });
+
+      const res = await fetch('/api/generate-video', {
+        method: 'POST',
+        body: form,
+      });
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || 'Failed');
+      }
+
+      const json = await res.json();
+      // TODO: show job id / result
+      alert('Video generation started: ' + JSON.stringify(json));
+      setOpenGenerate(false);
+      setImages([]);
+    } catch (err: any) {
+      console.error(err);
+      alert('Failed to start generation: ' + err?.message || err);
+    } finally {
+      setGenerating(false);
+    }
+  };
   return (
     <div className="flex flex-col h-screen bg-gray-50 font-sans text-gray-800">
       <header className="flex justify-between items-center px-8 h-16 border-b border-gray-200 bg-white">
@@ -125,6 +208,50 @@ export default function NewsEditor() {
           >
             Salvar
           </button>
+          <Dialog open={openGenerate} onOpenChange={setOpenGenerate}>
+            <DialogTrigger asChild>
+              <button className="ml-2 bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700">Gerar Vídeo</button>
+            </DialogTrigger>
+
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Gerar Vídeo a partir do artigo</DialogTitle>
+                <DialogDescription>Adicione imagens na ordem desejada e clique em Gerar para enviar o job.</DialogDescription>
+              </DialogHeader>
+
+              <div className="space-y-3">
+                <div>
+                  <label htmlFor={fileInputId} className="block text-sm font-medium text-gray-700">Adicionar imagens</label>
+                  <input id={fileInputId} type="file" accept="image/*" multiple onChange={(e) => onAddFiles(e.target.files)} className="mt-2" />
+                </div>
+
+                <div className="grid grid-cols-1 gap-2">
+                  {images.length === 0 && <div className="text-sm text-gray-500">Nenhuma imagem adicionada.</div>}
+                  {images.map((img, idx) => (
+                    <div key={img.id} className="flex items-center gap-3 p-2 border rounded">
+                      <img src={img.preview} alt={`img-${idx}`} className="w-20 h-12 object-cover rounded" />
+                      <div className="flex-1 text-sm">
+                        <div className="font-medium">{img.file.name}</div>
+                        <div className="text-xs text-gray-500">Posição: {idx + 1}</div>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <button onClick={() => moveImage(idx, -1)} className="px-2 py-1 bg-gray-100 rounded">↑</button>
+                        <button onClick={() => moveImage(idx, 1)} className="px-2 py-1 bg-gray-100 rounded">↓</button>
+                        <button onClick={() => removeImage(img.id)} className="px-2 py-1 bg-red-100 text-red-700 rounded">Rem</button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <DialogFooter>
+                <div className="flex gap-2">
+                  <button onClick={() => setOpenGenerate(false)} className="px-3 py-1 bg-gray-100 rounded">Cancelar</button>
+                  <button onClick={handleGenerate} disabled={generating || images.length === 0} className="px-3 py-1 bg-blue-600 text-white rounded disabled:opacity-50">{generating ? 'Gerando...' : 'Gerar'}</button>
+                </div>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
           <div className="w-8 h-8 rounded-full bg-gray-300" />
         </div>
       </header>
