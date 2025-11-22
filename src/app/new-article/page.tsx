@@ -28,6 +28,17 @@ import {
 } from '@/components/ui/dialog';
 import { useId } from 'react';
 
+const CATEGORIES = [
+  "Tecnologia",
+  "Saúde",
+  "Política",
+  "Economia",
+  "Esportes",
+  "Entretenimento",
+  "Educação",
+  "Cultura",
+];
+
 export default function NewsEditor() {
   const [input, setInput] = useState("");
   const [editorRef, setEditorRef] = useState<any | null>(null);
@@ -35,6 +46,13 @@ export default function NewsEditor() {
     { title: string; description: string }[]
   >([]);
   const [insightsLoading, setInsightsLoading] = useState(false);
+  const [category, setCategory] = useState<string>("");
+  const [showPostSaveModal, setShowPostSaveModal] = useState(false);
+  const [excerpt, setExcerpt] = useState<string>("");
+  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>("");
+  const [postSaveLoading, setPostSaveLoading] = useState(false);
+  const [pendingArticle, setPendingArticle] = useState<{ id: string; title: string; content: string; category: string | null } | null>(null);
 
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({ api: "/api/ai/chat" }),
@@ -105,7 +123,62 @@ export default function NewsEditor() {
 
       const id = (globalThis as any).crypto?.randomUUID ? (globalThis as any).crypto.randomUUID() : Math.random().toString(36).slice(2, 10);
 
-      const { error } = await supabase.from('articles').insert({ id, title, content: md }).select().single();
+      // Store the article data for post-save processing
+      setPendingArticle({ id, title, content: md, category: category || null });
+      
+      // Reset modal state
+      setExcerpt("");
+      setUploadedImage(null);
+      setImagePreview("");
+      
+      // Open modal
+      setShowPostSaveModal(true);
+    } catch (err) {
+      console.error(err);
+      alert("Unexpected error preparing article");
+    }
+  };
+
+  const handleCompleteArticleSave = async () => {
+    if (!pendingArticle) return;
+
+    setPostSaveLoading(true);
+    try {
+      let imageUrl = "https://jc.uol.com.br/img/logo.svg";
+
+      // Upload image if provided
+      if (uploadedImage) {
+        const fileName = `${pendingArticle.id}-${Date.now()}-${uploadedImage.name}`;
+        
+        const { data, error: uploadError } = await supabase.storage
+          .from("articles")
+          .upload(fileName, uploadedImage);
+
+        if (uploadError) {
+          throw new Error(`Image upload failed: ${uploadError.message}`);
+        }
+
+        // Get public URL
+        const { data: publicData } = supabase.storage
+          .from("articles")
+          .getPublicUrl(fileName);
+
+        imageUrl = publicData?.publicUrl || imageUrl;
+      }
+
+      // Insert article with image and excerpt
+      const { error } = await supabase
+        .from("articles")
+        .insert({
+          id: pendingArticle.id,
+          title: pendingArticle.title,
+          content: pendingArticle.content,
+          category: pendingArticle.category,
+          excerpt: excerpt || null,
+          image_url: imageUrl,
+        })
+        .select()
+        .single();
 
       if (error) {
         console.error("Insert error", error);
@@ -113,10 +186,27 @@ export default function NewsEditor() {
         return;
       }
 
+      // Clear state and close modal
+      setShowPostSaveModal(false);
+      setPendingArticle(null);
+      setExcerpt("");
+      setUploadedImage(null);
+      setImagePreview("");
+
       router.push("/");
     } catch (err) {
       console.error(err);
-      alert("Unexpected error saving article");
+      alert(`Error: ${err instanceof Error ? err.message : "Unexpected error saving article"}`);
+    } finally {
+      setPostSaveLoading(false);
+    }
+  };
+
+  const handleImageSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setUploadedImage(file);
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
@@ -203,6 +293,18 @@ export default function NewsEditor() {
         </div>
 
         <div className="flex items-center gap-4 text-sm text-gray-500">
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            className="px-3 py-1 rounded-md text-sm border border-gray-300 bg-white text-gray-700 hover:bg-gray-50"
+          >
+            <option value="">Selecionar Categoria</option>
+            {CATEGORIES.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
           <button
             onClick={handleSave}
             className="ml-2 bg-red-600 text-white px-3 py-1 rounded-md text-sm hover:bg-red-700"
@@ -421,6 +523,84 @@ export default function NewsEditor() {
           </Tabs>
         </aside>
       </main>
+
+      <Dialog open={showPostSaveModal} onOpenChange={setShowPostSaveModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Completar Artigo</DialogTitle>
+            <DialogDescription>Adicione uma imagem de destaque e um resumo do artigo.</DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4">
+            {/* Image Upload Section */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Imagem de Destaque</label>
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-4">
+                {imagePreview ? (
+                  <div className="flex flex-col items-center gap-3">
+                    <img src={imagePreview} alt="preview" className="w-full h-48 object-cover rounded" />
+                    <button
+                      onClick={() => {
+                        setUploadedImage(null);
+                        setImagePreview("");
+                      }}
+                      className="text-sm text-red-600 hover:text-red-700"
+                    >
+                      Remover Imagem
+                    </button>
+                  </div>
+                ) : (
+                  <label className="cursor-pointer flex flex-col items-center gap-2">
+                    <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span className="text-sm text-gray-600">Clique para fazer upload da imagem</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageSelect}
+                      className="hidden"
+                    />
+                  </label>
+                )}
+              </div>
+            </div>
+
+            {/* Excerpt Section */}
+            <div>
+              <label htmlFor="excerpt" className="block text-sm font-medium text-gray-700 mb-2">Resumo do Artigo</label>
+              <textarea
+                id="excerpt"
+                value={excerpt}
+                onChange={(e) => setExcerpt(e.target.value)}
+                placeholder="Digite um breve resumo do artigo (máximo 250 caracteres)"
+                maxLength={250}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                rows={4}
+              />
+              <div className="text-xs text-gray-500 mt-1">{excerpt.length}/250</div>
+            </div>
+          </div>
+
+          <DialogFooter>
+            <div className="flex gap-2 w-full">
+              <button
+                onClick={() => setShowPostSaveModal(false)}
+                className="flex-1 px-3 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={handleCompleteArticleSave}
+                disabled={postSaveLoading}
+                className="flex-1 px-3 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+              >
+                {postSaveLoading ? 'Salvando...' : 'Salvar Artigo'}
+              </button>
+            </div>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

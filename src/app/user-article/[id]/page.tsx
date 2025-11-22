@@ -1,281 +1,251 @@
-"use client";
-
 import React from 'react';
-import { useParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Logo from '../../../../public/logo.png';
 import { supabase } from '@/lib/supabaseClient';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
 import Link from 'next/link';
-import { useUserTracking } from '@/hooks/use-user-tracking';
+import { UserTracker } from '@/components/UserTracker';
+import { SidebarMenu } from '@/components/SidebarMenu';
+import { UOLBar } from '@/components/UOLBar';
+import { ArticleContentWrapper } from '@/components/ArticleContentWrapper';
+import type { Metadata } from 'next';
 
+// Types
 interface ArticleData {
   id: string;
   title: string;
   content: string;
+  excerpt?: string | null;
   author: string | null;
+  category: string | null;
+  views: number;
   created_at: string;
   updated_at: string;
-  views?: number;
+  image_url?: string | null;
 }
 
-interface SectionBlock {
-  type: 'heading' | 'content';
-  content: string;
-}
+const DEFAULT_IMAGE = "https://jc.uol.com.br/img/logo.svg";
 
-export default function UserArticlePage() {
-  const params = useParams();
-  const router = useRouter();
-  const id = params?.id as string | undefined;
+// Helper to format date
+const formatDate = (dateString: string) => {
+  return new Date(dateString).toLocaleDateString('pt-BR', {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+};
 
-  const [article, setArticle] = React.useState<ArticleData | null>(null);
-  const [loading, setLoading] = React.useState(true);
-  const [readingTime, setReadingTime] = React.useState(0);
-  const [sections, setSections] = React.useState<SectionBlock[]>([]);
-  
-  // Initialize user tracking
-  const { userId, isTracking } = useUserTracking({ articleId: id });
+// Calculate reading time (approximately 200 words per minute)
+const calculateReadingTime = (text: string): number => {
+  const wordsPerMinute = 200;
+  const wordCount = text.trim().split(/\s+/).length;
+  const readingTime = Math.ceil(wordCount / wordsPerMinute);
+  return Math.max(1, readingTime); // Minimum 1 minute
+};
 
-  React.useEffect(() => {
-    if (!id) return;
-    let mounted = true;
+// Fetch related articles logic (adapted for Server Component)
+async function fetchRelatedArticles(
+  currentArticleId: string,
+  currentArticleCategory: string | null
+): Promise<ArticleData[]> {
+  try {
+    // Simple fetch for related articles (same category or recent)
+    // This is a simplified version of the complex logic to ensure speed and SSR reliability
 
-    const load = async () => {
-      setLoading(true);
-      try {
-        const { data, error } = await supabase
-          .from('articles')
-          .select('id, title, content, author, created_at, updated_at')
-          .eq('id', id)
-          .single();
+    // 1. Fetch same category
+    let related: ArticleData[] = [];
 
-        if (error) {
-          console.error('Supabase error', error);
-          return;
-        }
+    if (currentArticleCategory) {
+      const { data: sameCat } = await supabase
+        .from('articles')
+        .select('*')
+        .neq('id', currentArticleId)
+        .eq('category', currentArticleCategory)
+        .order('views', { ascending: false })
+        .limit(4);
 
-        if (mounted) {
-          setArticle(data as ArticleData);
-          // Calculate reading time (average 200 words per minute)
-          const wordCount = data.content?.split(/\s+/).length || 0;
-          setReadingTime(Math.ceil(wordCount / 200));
-          
-          // Parse sections from content (excluding first heading which is title)
-          const contentWithoutFirstHeading = data.content
-            ? data.content.replace(/^#+\s+.+\n?/, '')
-            : '';
-          
-          const lines = contentWithoutFirstHeading.split('\n');
-          const parsedSections: SectionBlock[] = [];
-          let currentContent = '';
-          
-          for (const line of lines) {
-            if (line.match(/^#+\s+/)) {
-              // It's a heading
-              if (currentContent.trim()) {
-                parsedSections.push({ type: 'content', content: currentContent.trim() });
-                currentContent = '';
-              }
-              parsedSections.push({ type: 'heading', content: line });
-            } else {
-              currentContent += line + '\n';
-            }
-          }
-          
-          if (currentContent.trim()) {
-            parsedSections.push({ type: 'content', content: currentContent.trim() });
-          }
-          
-          setSections(parsedSections);
-        }
-      } catch (err) {
-        console.error(err);
-      } finally {
-        if (mounted) setLoading(false);
+      if (sameCat) related = [...related, ...sameCat];
+    }
+
+    // 2. If not enough, fetch recent
+    if (related.length < 4) {
+      const { data: recent } = await supabase
+        .from('articles')
+        .select('*')
+        .neq('id', currentArticleId)
+        .order('created_at', { ascending: false })
+        .limit(4 - related.length);
+
+      if (recent) {
+        // Filter duplicates
+        const existingIds = new Set(related.map(a => a.id));
+        const uniqueRecent = recent.filter(a => !existingIds.has(a.id));
+        related = [...related, ...uniqueRecent];
       }
-    };
+    }
 
-    load();
-    return () => {
-      mounted = false;
-    };
-  }, [id]);
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-12 h-12 border-4 border-gray-200 border-t-red-600 rounded-full animate-spin"></div>
-          <p className="text-gray-600 font-medium">Carregando notícia...</p>
-        </div>
-      </div>
-    );
+    return related;
+  } catch (err) {
+    console.error('Error fetching related articles:', err);
+    return [];
   }
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+
+  const { data: article } = await supabase
+    .from('articles')
+    .select('*')
+    .eq('id', id)
+    .single();
 
   if (!article) {
+    return {
+      title: 'Notícia não encontrada',
+      description: 'A notícia que você está procurando não existe ou foi removida.'
+    };
+  }
+
+  const displayTitle = article.title ? article.title.substring(1).trim() : 'Sem título';
+  const imageUrl = article.image_url || "https://jc.uol.com.br/img/logo.svg";
+  const description = article.excerpt || (article.content ? article.content.substring(0, 160) : 'Leia mais sobre este artigo.');
+  const url = `${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/user-article/${id}`;
+
+  return {
+    title: displayTitle,
+    description: description,
+    openGraph: {
+      title: displayTitle,
+      description: description,
+      url: url,
+      type: 'article',
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: displayTitle,
+        }
+      ],
+      authors: article.author ? [article.author] : undefined,
+      publishedTime: article.created_at,
+      modifiedTime: article.updated_at,
+      tags: article.category ? [article.category] : undefined,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: displayTitle,
+      description: description,
+      images: [imageUrl],
+      creator: article.author || undefined,
+    },
+  };
+}
+
+export default async function UserArticlePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+
+  // 1. Fetch Article Data
+  const { data: article, error } = await supabase
+    .from('articles')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error || !article) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">Notícia não encontrada</h1>
           <p className="text-gray-600 mb-6">A notícia que você está procurando não existe ou foi removida.</p>
-         
+          <Link href="/user-article" className="text-red-600 hover:underline">Voltar para a Home</Link>
         </div>
       </div>
     );
   }
 
-  // Display title: remove the first character and trim the remaining string
-  const displayTitle = article.title && article.title.length > 0 
-    ? article.title.slice(1).trim() 
-    : article.title || '';
+  const articleData = article as ArticleData;
 
-  // Remove the first heading from content to avoid rendering title twice
-  const contentWithoutFirstHeading = article.content
-    ? article.content.replace(/^#+\s+.+\n?/, '')
-    : '';
+  // Process title: remove first char and trim
+  const displayTitle = articleData.title ? articleData.title.substring(1).trim() : '';
 
-  const publishDate = article.created_at 
-    ? new Date(article.created_at).toLocaleDateString('pt-BR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
-    : '—';
-
-  const updateDate = article.updated_at && article.updated_at !== article.created_at
-    ? new Date(article.updated_at).toLocaleDateString('pt-BR', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-      })
-    : null;
+  // 3. Fetch Related Articles
+  const relatedArticles = await fetchRelatedArticles(id, articleData.category);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 via-white to-gray-50">
-      {/* Navigation Header */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-sm border-b border-gray-200">
-        <div className="max-w-4xl mx-auto px-6 py-4 flex items-center justify-between">
-          <Link href="/user-article" className="flex items-center gap-2 hover:opacity-80 transition">
-            <Image src={Logo} alt="Logo" width={120} />
-          </Link>
-         
+    <div className="min-h-screen bg-white font-sans text-gray-900">
+      <UOLBar />
+
+      {/* Header */}
+      <header className="sticky top-0 bg-white/95 backdrop-blur-md z-50 border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <div className="flex items-center">
+            <SidebarMenu />
+            <Link href="/user-article" className="hover:opacity-80 transition-opacity">
+              <Image src={Logo} alt="Logo" width={160} priority />
+            </Link>
+          </div>
         </div>
       </header>
 
-      {/* Article Container */}
-      <main className="max-w-7xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-12 gap-6">
-          {/* Left Ad Space */}
-          <aside className="col-span-2 sticky top-24 h-96">
-            <div className="bg-gray-300 rounded-lg w-full h-full flex items-center justify-center">
-              <span className="text-gray-500 text-sm">Anuncio</span>
-            </div>
-          </aside>
+      <main className="max-w-4xl mx-auto px-6 py-12">
 
-          {/* Article */}
-          <div className="col-span-8">
         {/* Article Header */}
-        <article className="bg-white rounded-2xl  p-10 mb-8">
-          {/* Title */}
-          <h1 className="text-5xl font-bold text-gray-900 mb-4 leading-tight">
+        <div className="mb-8">
+          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-4">
             {displayTitle}
           </h1>
 
-          {/* Meta Information */}
-          <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 pb-6 border-b border-gray-200">
-            <div className="flex items-center gap-2">
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10m7 8H7a2 2 0 01-2-2V7a2 2 0 012-2h10a2 2 0 012 2v12a2 2 0 01-2 2z" />
-              </svg>
-              <time dateTime={article.created_at}>{publishDate}</time>
-            </div>
-
-            {updateDate && (
-              <div className="flex items-center gap-2 text-gray-500">
-                <span>•</span>
-                <span>Atualizado em {updateDate}</span>
-              </div>
+          {/* Article Metadata */}
+          <div className="mb-6 pb-6 border-b border-gray-200">
+            {articleData.excerpt && (
+              <p className="text-lg text-gray-700 mb-4 italic">
+                {articleData.excerpt}
+              </p>
             )}
-
-            {article.author && (
-              <div className="flex items-center gap-2">
-                <span>•</span>
-                <span className="text-gray-700 font-medium">{article.author}</span>
-              </div>
-            )}
-
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
+              <time dateTime={articleData.created_at}>
+                {formatDate(articleData.created_at)}
+              </time>
               <span>•</span>
-              <span className="text-gray-500">{readingTime} min de leitura</span>
+              <span>{calculateReadingTime(articleData.content)} min de leitura</span>
+              {articleData.author && (
+                <>
+                  <span>•</span>
+                  <span>Por {articleData.author}</span>
+                </>
+              )}
             </div>
           </div>
 
-          {/* Article Content */}
-          <div className="mt-8">
-            {sections.map((section, index) => (
-              <React.Fragment key={index}>
-                {section.type === 'heading' ? (
-                  <div className="prose prose-lg max-w-none markdown-body text-gray-700">
-                    <ReactMarkdown 
-                      remarkPlugins={[remarkGfm]}
-                      components={{
-                        img: ({node, ...props}) => (
-                          <img {...props} className="rounded-lg shadow-md my-6 max-w-full h-auto" alt={props.alt} />
-                        ),
-                        a: ({node, ...props}) => (
-                          <a {...props} className="text-red-600 hover:text-red-700 underline transition" />
-                        ),
-                      }}
-                    > 
-                      {section.content}
-                    </ReactMarkdown>
-                  </div>
-                ) : (
-                  <div className="prose prose-lg max-w-none markdown-body text-gray-700">
-                    <ReactMarkdown 
-                      remarkPlugins={[remarkGfm]}
-                      components={{
-                        img: ({node, ...props}) => (
-                          <img {...props} className="rounded-lg shadow-md my-6 max-w-full h-auto" alt={props.alt} />
-                        ),
-                        a: ({node, ...props}) => (
-                          <a {...props} className="text-red-600 hover:text-red-700 underline transition" />
-                        ),
-                      }}
-                    > 
-                      {section.content}
-                    </ReactMarkdown>
-                  </div>
-                )}
-                
-                {/* Show "Notícias Relacionadas" after every 2 sections (index 1, 3, 5, etc) */}
-                {((index + 1) % 2 === 0) && (
-                  <div className="my-8 bg-gray-300 rounded-lg p-6 flex items-center justify-center h-96">
-                    <span className="text-gray-500 text-lg font-semibold">Notícias Relacionadas</span>
-                  </div>
-                )}
-              </React.Fragment>
-            ))}
+          {/* Social Share Buttons (Mock) */}
+          <div className="flex items-center gap-2 mb-8">
+            <button className="flex items-center gap-2 px-4 py-2 bg-[#1877F2] text-white rounded-full font-bold text-sm hover:opacity-90 transition-opacity">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" /></svg>
+              Compartilhar
+            </button>
+            <button className="flex items-center gap-2 px-4 py-2 bg-[#25D366] text-white rounded-full font-bold text-sm hover:opacity-90 transition-opacity">
+              <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" /></svg>
+              WhatsApp
+            </button>
           </div>
 
-          {/* Final Related News Section at the end */}
-          <div className="mt-12 pt-8 border-t border-gray-200">
-            <div className="bg-gray-300 rounded-lg p-6 flex items-center justify-center h-96">
-              <span className="text-gray-500 text-lg font-semibold">Notícias Relacionadas</span>
-            </div>
-          </div>
-        </article>
+          {/* Featured Image */}
+          <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg mb-8 group">
+            <img
+              src={articleData.image_url || DEFAULT_IMAGE}
+              alt={articleData.title}
+              className="w-full h-full object-cover"
+            />
           </div>
 
-          {/* Right Ad Space */}
-          <aside className="col-span-2 sticky top-24 h-96">
-            <div className="bg-gray-300 rounded-lg w-full h-full flex items-center justify-center">
-              <span className="text-gray-500 text-sm">Ad Space</span>
-            </div>
-          </aside>
         </div>
+
+        {/* Content - Client Component for Section Tracking */}
+        <ArticleContentWrapper article={articleData} relatedArticles={relatedArticles} />
+
       </main>
 
       {/* Footer */}

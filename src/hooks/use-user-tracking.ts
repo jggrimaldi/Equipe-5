@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 interface LocationData {
   ip: string;
@@ -33,8 +33,12 @@ const DEFAULT_LOCATION: LocationData = {
 export const useUserTracking = ({ articleId }: UseUserTrackingProps = {}) => {
   const [userId, setUserId] = useState<string | null>(null);
   const [isTracking, setIsTracking] = useState(false);
+  const hasTrackedRef = useRef(false);
 
   useEffect(() => {
+    // Prevent double execution in React Strict Mode
+    if (hasTrackedRef.current) return;
+    hasTrackedRef.current = true;
     const trackUser = async () => {
       try {
         // Step 1: Get or create anonymous user
@@ -56,7 +60,7 @@ export const useUserTracking = ({ articleId }: UseUserTrackingProps = {}) => {
         if (articleId) {
           // Get geolocation
           let locationData: LocationData = DEFAULT_LOCATION;
-          
+
           try {
             const geoResponse = await fetch('/api/geolocation');
             const geoData: LocationData = await geoResponse.json();
@@ -92,6 +96,20 @@ export const useUserTracking = ({ articleId }: UseUserTrackingProps = {}) => {
           }
 
           console.log('User visit logged successfully');
+
+          // Increment view count
+          try {
+            await fetch('/api/article-views', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ articleId }),
+            });
+            console.log('View count incremented');
+          } catch (viewError) {
+            console.error('Failed to increment view count:', viewError);
+          }
         }
 
         setIsTracking(true);
