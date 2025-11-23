@@ -233,7 +233,6 @@ export default async function UserArticlePage({ params }: { params: Promise<{ id
               WhatsApp
             </button>
           </div>
-        <SummaryAccordion summary={articleData.summary} />
 
           {/* Featured Image */}
           <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg mb-8 group">
@@ -247,6 +246,7 @@ export default async function UserArticlePage({ params }: { params: Promise<{ id
         </div>
 
         {/* Summary Accordion */}
+        <SummaryAccordion summary={articleData.summary} />
 
         {/* Content - Client Component for Section Tracking */}
         <ArticleContentWrapper article={articleData} relatedArticles={relatedArticles} />
