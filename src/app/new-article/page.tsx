@@ -145,6 +145,25 @@ export default function NewsEditor() {
     setPostSaveLoading(true);
     try {
       let imageUrl = "https://jc.uol.com.br/img/logo.svg";
+      let generatedSummary = "";
+
+      // Generate summary from content
+      try {
+        const summaryRes = await fetch("/api/ai/summary", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ markdown: pendingArticle.content }),
+        });
+
+        if (summaryRes.ok) {
+          const summaryData = await summaryRes.json();
+          generatedSummary = summaryData.summary || "";
+        } else {
+          console.warn("Failed to generate summary, continuing without it");
+        }
+      } catch (summaryErr) {
+        console.warn("Error generating summary:", summaryErr);
+      }
 
       // Upload image if provided
       if (uploadedImage) {
@@ -166,7 +185,7 @@ export default function NewsEditor() {
         imageUrl = publicData?.publicUrl || imageUrl;
       }
 
-      // Insert article with image and excerpt
+      // Insert article with image, excerpt, and generated summary
       const { error } = await supabase
         .from("articles")
         .insert({
@@ -175,6 +194,7 @@ export default function NewsEditor() {
           content: pendingArticle.content,
           category: pendingArticle.category,
           excerpt: excerpt || null,
+          summary: generatedSummary || null,
           image_url: imageUrl,
         })
         .select()

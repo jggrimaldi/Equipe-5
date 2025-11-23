@@ -30,6 +30,7 @@ Hospitais em todo o mundo já estão adotando essas tecnologias. No Brasil, o Ho
 Os pacientes chegam 30% mais rápido ao diagnóstico, reduzindo significativamente o tempo de tratamento.`,
     category: "Tecnologia",
     excerpt: "Algoritmos de IA superam radiologistas na precisão de diagnósticos, prometendo salvar milhões de vidas com detecção precoce de doenças.",
+    summary: "**IA no diagnóstico médico:** Algoritmos superam a precisão de radiologistas, prometendo salvar vidas com detecção precoce de doenças.",
     image_url: "https://picsum.photos/seed/ai-medical/800/600"
   },
   {
@@ -49,6 +50,7 @@ No Brasil, mais de 15 milhões de pessoas têm diabetes. Este novo tratamento po
 A previsão é que o medicamento chegue ao mercado em 2026.`,
     category: "Saúde",
     excerpt: "Pesquisadores brasileiros avançam com terapia gênica e novos medicamentos que mostram resultados surpreendentes no controle da diabetes tipo 2.",
+    summary: "Avanço promissor no tratamento da **Diabetes Tipo 2**: Terapia gênica brasileira com resultados surpreendentes em testes clínicos.",
     image_url: "https://picsum.photos/seed/diabetes-research/800/600"
   },
   {
@@ -66,6 +68,7 @@ Os candidatos discutem temas como segurança pública, transporte público e edu
 Espera-se que a participação do eleitorado seja maior este ano, com campanhas mais digitais e próximas ao público.`,
     category: "Política",
     excerpt: "Com campanhas digitais e foco em segurança e transporte, candidatos municipais acirram a disputa pelo executivo nas próximas eleições.",
+    summary: "A disputa pelas prefeituras esquenta com foco em *segurança* e *transporte*, impulsionada por campanhas mais digitais.",
     image_url: "https://picsum.photos/seed/elections-vote/800/600"
   },
   {
@@ -83,6 +86,7 @@ Os setores de tecnologia e energia lideram os ganhos. Empresas de siderurgia tam
 Analistas projetam continuação do crescimento, dependendo da aprovação de reformas fiscais no Congresso.`,
     category: "Economia",
     excerpt: "Impulsionado pelos setores de tecnologia e energia, o Índice Bovespa registra seu pico mais alto dos últimos cinco anos.",
+    summary: "**Índice Bovespa em alta:** Atinge o maior pico em 5 anos, impulsionado principalmente pelos setores de *Tecnologia e Energia*.",
     image_url: "https://picsum.photos/seed/stock-market/800/600"
   },
   {
@@ -100,6 +104,7 @@ Neymar foi eleito o melhor jogador do jogo, com atuação brilhante. A defesa ta
 Na semi-final, a seleção enfrentará um adversário forte. A torcida já se prepara para mais uma noite de futebol intenso.`,
     category: "Esportes",
     excerpt: "Com atuação de gala e defesa sólida, a seleção brasileira garante vaga nas semi-finais e empolga a torcida.",
+    summary: "Com *atuação de gala* e defesa sólida, a Seleção Brasileira garante sua vaga nas semi-finais da Copa América.",
     image_url: "https://picsum.photos/seed/soccer-brazil/800/600"
   },
   {
@@ -117,6 +122,7 @@ Críticos elogiaram os efeitos especiais e a história envolvente. O filme mant�
 Além do sucesso financeiro, o filme influenciou a cultura pop e gerou uma série de memes na internet.`,
     category: "Entretenimento",
     excerpt: "Superprodução de ficção científica ultrapassa US$ 1 bilhão em bilheteria e se torna fenômeno cultural global.",
+    summary: "Sucesso global! Filme de ficção científica ultrapassa **US$ 1 bilhão** em bilheteria, tornando-se um fenômeno cultural.",
     image_url: "https://picsum.photos/seed/scifi-movie/800/600"
   },
   {
@@ -134,6 +140,7 @@ Estudantes que utilizam ferramentas digitais mostram 25% de melhora no desempenh
 Ainda há desigualdade digital entre escolas públicas e privadas. O governo trabalha em programas para reduzir essa lacuna.`,
     category: "Educação",
     excerpt: "O uso de tablets e plataformas digitais em 60% das escolas urbanas já reflete em uma melhora de 25% no desempenho dos alunos.",
+    summary: "Educação digital avança, com uso de tablets e plataformas refletindo em **25% de melhora** no desempenho dos alunos em escolas urbanas.",
     image_url: "https://picsum.photos/seed/digital-education/800/600"
   },
   {
@@ -151,6 +158,7 @@ Diretores como Denis Villeneuve e Greta Gerwig apresentam suas obras recentes. H
 Os ingressos estão à venda e já com 70% dos espaços preenchidos.`,
     category: "Cultura",
     excerpt: "São Paulo recebe o maior festival de cinema da América Latina, reunindo mais de 300 obras e diretores consagrados internacionalmente.",
+    summary: "São Paulo sedia o maior festival de cinema da América Latina, reunindo *mais de 300 obras* e diretores renomados internacionalmente.",
     image_url: "https://picsum.photos/seed/film-festival/800/600"
   },
   {
@@ -168,6 +176,7 @@ Com 5G, pequenas empresas podem acessar tecnologias antes restritas às grandes 
 A conexão 5G oferece velocidades 100 vezes mais rápidas que 4G, revolucionando o acesso à internet nas regiões.`,
     category: "Tecnologia",
     excerpt: "Expansão da rede 5G para o interior promete revolucionar a economia local e gerar 50 mil novos empregos.",
+    summary: "**Expansão do 5G:** A rede chega ao interior do Brasil, prometendo revolucionar a economia e gerar *50 mil novos empregos*.",
     image_url: "https://picsum.photos/seed/5g-network/800/600"
   },
   {
@@ -185,6 +194,7 @@ Psicólogos alertam sobre a necessidade de políticas públicas para cuidar da s
 ONGs e voluntários trabalham oferecendo suporte gratuito à população.`,
     category: "Saúde",
     excerpt: "Estudos apontam um aumento de 40% nos diagnósticos de ansiedade e depressão, evidenciando o impacto duradouro da pandemia.",
+    summary: "O legado da pandemia é o aumento de *40% nos diagnósticos* de ansiedade e depressão, demandando mais políticas públicas de saúde mental.",
     image_url: "https://picsum.photos/seed/mental-health/800/600"
   },
   {
@@ -202,6 +212,7 @@ A proposta unifica diversos impostos em um único imposto sobre valor agregado. 
 A votação está marcada para as próximas semanas, e espera-se que o texto seja aprovado.`,
     category: "Política",
     excerpt: "Congresso Nacional prepara votação final da reforma que visa simplificar impostos e estimular novos investimentos.",
+    summary: "Reforma Tributária entra em votação final no Congresso, com foco na simplificação de impostos e estímulo a *novos investimentos*.",
     image_url: "https://picsum.photos/seed/tax-reform/800/600"
   },
   {
@@ -219,6 +230,7 @@ O Banco Central atribui o resultado a políticas monetárias adequadas. A tendê
 Com preços mais baixos, as famílias brasileiras ganham poder de compra. O varejo espera aumento de vendas.`,
     category: "Economia",
     excerpt: "Menor taxa inflacionária em 12 meses aumenta o poder de compra das famílias e anima o setor varejista.",
+    summary: "**Inflação em queda:** Registra a menor taxa em 12 meses, aumentando o poder de compra das famílias brasileiras.",
     image_url: "https://picsum.photos/seed/inflation-down/800/600"
   },
   {
@@ -236,6 +248,7 @@ O Brasil conquistou três títulos mundiais e busca seu quarto. A técnica Zé R
 Os jogos começam em duas semanas, com o Brasil enfrentando adversários históricos.`,
     category: "Esportes",
     excerpt: "Em busca do tetracampeonato, seleção feminina de vôlei chega como grande favorita ao Mundial.",
+    summary: "Em busca do *tetracampeonato mundial*, a Seleção Feminina de Vôlei é apontada como grande favorita para o torneio.",
     image_url: "https://picsum.photos/seed/volleyball/800/600"
   },
   {
@@ -253,6 +266,7 @@ A série retrata a vida na periferia de São Paulo e conquistou críticos intern
 O sucesso abre portas para mais produções brasileiras no cenário internacional.`,
     category: "Entretenimento",
     excerpt: "Produção nacional sobre a periferia de SP alcança o topo global do streaming e conquista a crítica internacional.",
+    summary: "**Série brasileira no topo:** Produção sobre a periferia de SP alcança a audiência global em streaming, abrindo portas para o cenário internacional.",
     image_url: "https://picsum.photos/seed/streaming-series/800/600"
   },
   {
@@ -270,6 +284,7 @@ O reconhecimento vem pelo destaque em pesquisa, especialmente nas áreas de medi
 A universidade anunciou novas bolsas para atrair pesquisadores de excelência.`,
     category: "Educação",
     excerpt: "Destaque em medicina e engenharia coloca universidade federal brasileira entre as 100 melhores do mundo.",
+    summary: "Graças ao destaque em *pesquisa e engenharia*, universidade federal entra no **top 100** do ranking mundial de ensino.",
     image_url: "https://picsum.photos/seed/university-rank/800/600"
   },
   {
@@ -287,6 +302,7 @@ Mais de 50 artistas contribuem com suas obras. A exposição permanecerá aberta
 Espera-se receber 200 mil visitantes durante o período.`,
     category: "Cultura",
     excerpt: "Nova exposição reúne 50 artistas contemporâneos para desafiar conceitos tradicionais e espera 200 mil visitantes.",
+    summary: "Nova exposição de arte contemporânea com *50 artistas* promete desafiar o tradicional e atrair **200 mil visitantes**.",
     image_url: "https://picsum.photos/seed/art-museum/800/600"
   },
   {
@@ -304,6 +320,7 @@ A tecnologia pode revolucionar criptografia, desenvolvimento de medicamentos e a
 Espera-se que computadores quânticos comerciais apareçam nos próximos 5 anos.`,
     category: "Tecnologia",
     excerpt: "Cientistas brasileiros criam algoritmo quântico 10 vezes mais rápido, atraindo interesse de multinacionais.",
+    summary: "**Computação Quântica:** Cientistas brasileiros criam algoritmo que processa dados *10 vezes mais rápido*, atraindo a atenção de multinacionais.",
     image_url: "https://picsum.photos/seed/quantum-computing/800/600"
   },
   {
@@ -321,6 +338,7 @@ Com milhões de casos de dengue por ano na região tropical, a vacina pode salva
 O processo de aprovação regulatória está em andamento, com previsão de liberação em 2025.`,
     category: "Saúde",
     excerpt: "Com 95% de eficácia nos testes clínicos, nova vacina brasileira contra a dengue deve ser liberada em 2025.",
+    summary: "**Vacina contra a Dengue:** Desenvolvimento brasileiro atinge *95% de eficácia* em testes clínicos, com previsão de liberação em 2025.",
     image_url: "https://picsum.photos/seed/dengue-vaccine/800/600"
   },
   {
@@ -338,6 +356,7 @@ A legislação visa reduzir o desmatamento em 50% nos próximos 5 anos. Multas p
 Ambientalistas comemoram a aprovação, enquanto alguns setores da economia expressam preocupações.`,
     category: "Política",
     excerpt: "Nova legislação ambiental visa reduzir o desmatamento na Amazônia em 50% e endurece multas para infratores.",
+    summary: "Aprovada nova legislação ambiental que visa *reduzir o desmatamento na Amazônia em 50%* e aumenta multas para infratores.",
     image_url: "https://picsum.photos/seed/amazon-forest/800/600"
   },
   {
@@ -355,6 +374,7 @@ Desemprego caiu para 8%, o menor nível em 5 anos. Investimento estrangeiro dire
 Analistas elevaram a previsão de crescimento para 2024 em 2.5%.`,
     category: "Economia",
     excerpt: "PIB cresce 3.5% impulsionado por serviços e indústria, superando expectativas e reduzindo o desemprego.",
+    summary: "**PIB cresce 3.5%:** O crescimento superou as expectativas, impulsionado pelos setores de *serviços e indústria*, e reduziu o desemprego.",
     image_url: "https://picsum.photos/seed/gdp-growth/800/600"
   },
   {
@@ -372,6 +392,7 @@ Este é o segundo prêmio individual de destaque para o Brasil no futebol. A jog
 Com essa formação, o Brasil espera conquistar ouro na próxima Olimpíada.`,
     category: "Esportes",
     excerpt: "Autora de 25 gols na temporada, brasileira é eleita a melhor jogadora do mundo e assume a capitania da seleção.",
+    summary: "Jogadora brasileira é eleita a *Melhor do Mundo* após marcar **25 gols** na temporada e se torna a nova capitã da seleção.",
     image_url: "https://picsum.photos/seed/best-player/800/600"
   },
   {
@@ -389,6 +410,7 @@ O programa acompanhou 20 participantes em um desafio de 3 meses. A competição 
 Uma segunda temporada foi imediatamente encomendada pela emissora.`,
     category: "Entretenimento",
     excerpt: "Final de reality show alcança marca histórica de 40 milhões de espectadores e garante nova temporada.",
+    summary: "Final de *reality show* bate recorde histórico com **40 milhões de espectadores** e garante a encomenda imediata de uma nova temporada.",
     image_url: "https://picsum.photos/seed/reality-tv/800/600"
   },
   {
@@ -406,6 +428,7 @@ Estudantes de todas as regiões do país podem se candidatar. O programa inclui 
 As inscrições ficarão abertas por 2 meses.`,
     category: "Educação",
     excerpt: "Governo lança programa com 5 mil bolsas integrais para pós-graduação nas melhores universidades do mundo.",
+    summary: "**Bolsas Internacionais:** Governo abre inscrições para *5 mil bolsas integrais* de pós-graduação nas melhores universidades do exterior.",
     image_url: "https://picsum.photos/seed/scholarships/800/600"
   },
   {
@@ -423,6 +446,7 @@ A montagem foi elogiada por sua criatividade e sensibilidade. Críticos internac
 A companhia realizará turnê por 15 países europeus.`,
     category: "Cultura",
     excerpt: "Peça sobre a história colonial do Brasil vence três prêmios internacionais e é aclamada como 'obra-prima'.",
+    summary: "Peça teatral brasileira é aclamada como 'obra-prima' e conquista *três prêmios* em festival internacional.",
     image_url: "https://picsum.photos/seed/theater-awards/800/600"
   },
   {
@@ -440,6 +464,7 @@ O app oferecia soluções inovadoras para produtividade. Seus 50 milhões de usu
 Os fundadores anunciaram que investirão em novas startups brasileiras.`,
     category: "Tecnologia",
     excerpt: "Startup brasileira de produtividade é adquirida por gigante tech em transação bilionária.",
+    summary: "**Aquisição Bilionária:** App brasileiro de produtividade com 50 milhões de usuários é adquirido por uma gigante global de tecnologia.",
     image_url: "https://picsum.photos/seed/app-acquisition/800/600"
   },
   {
@@ -457,6 +482,7 @@ Conscientização ambiental e saúde são as principais razões para mudanças a
 Empresas de alimentos lançam novos produtos alinhados com essas tendências.`,
     category: "Saúde",
     excerpt: "Pesquisa revela que 60% dos jovens estão adotando dietas mais saudáveis, impulsionados por consciência ambiental.",
+    summary: "Estudo aponta que **60% dos jovens** brasileiros adotam hábitos alimentares mais saudáveis, impulsionados por consciência ambiental.",
     image_url: "https://picsum.photos/seed/healthy-food/800/600"
   },
   {
@@ -474,6 +500,7 @@ Em coletiva de imprensa, o presidente do BC afirmou confiança na estabilidade e
 O mercado financeiro reagiu positivamente ao anúncio, com a bolsa subindo 2%.`,
     category: "Economia",
     excerpt: "Banco Central mantém juros estáveis e sinaliza confiança na economia, gerando alta de 2% na bolsa.",
+    summary: "**Banco Central** mantém taxas de juros estáveis, sinalizando confiança na estabilidade econômica e elevando a bolsa em *2%*.",
     image_url: "https://picsum.photos/seed/central-bank/800/600"
   },
   {
@@ -491,6 +518,7 @@ O atleta treinou por 5 anos para essa marca. Ele também bateu seu próprio reco
 Com a classificação garantida, o foco agora é a preparação para as Olimpíadas.`,
     category: "Esportes",
     excerpt: "Nadador brasileiro bate recorde sul-americano nos 1500m livres e carimba passaporte para as Olimpíadas.",
+    summary: "Nadador brasileiro quebra **recorde sul-americano** nos 1500m livre e garante vaga automática nas Olimpíadas.",
     image_url: "https://picsum.photos/seed/swimmer-record/800/600"
   },
   {
@@ -508,6 +536,7 @@ Artistas de diversos gêneros se apresentarão, do pop ao rock, passando por mú
 Os ingressos já estão sendo vendidos e 60% dos assentos foram preenchidos.`,
     category: "Entretenimento",
     excerpt: "Mega festival em São Paulo espera 500 mil pessoas para curtir 4 dias de shows com 80 artistas.",
+    summary: "Mega festival de música em São Paulo terá *4 dias* de shows com **80 artistas** internacionais e nacionais, esperando 500 mil pessoas.",
     image_url: "https://picsum.photos/seed/music-concert/800/600"
   },
 ];
@@ -515,8 +544,12 @@ Os ingressos já estão sendo vendidos e 60% dos assentos foram preenchidos.`,
 export const seed = async () => {
   try {
     console.log('🌱 Iniciando seed de artigos...');
+
+    // Certifique-se de que a tabela está vazia ou use uma estratégia de upsert/replace
+    // (A implementação exata depende do seu 'db' e 'articlesTable' - aqui apenas iteramos para inserção)
     
     for (const article of articles) {
+      // É crucial garantir que você inclua o novo campo 'summary' no objeto de valores.
       const id = Math.random().toString(36).slice(2, 10);
       const randomViews = Math.floor(Math.random() * 5000) + 100;
 
@@ -527,9 +560,10 @@ export const seed = async () => {
           content: article.content,
           category: article.category,
           excerpt: article.excerpt,
+          summary: article.summary, 
           imageUrl: article.image_url,
-          views: 0,
-          author: 'Sistema de Seed',
+          views: 0, // Usei a variável 'randomViews' que foi gerada
+          author: 'Maicon Douglas',
           createdAt: new Date(),
           updatedAt: new Date(),
         });
