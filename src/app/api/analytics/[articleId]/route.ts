@@ -19,10 +19,10 @@ interface AnalyticsData {
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { articleId: string } }
+  { params }: { params: Promise<{ articleId: string }> }
 ) {
   try {
-    const { articleId } = params;
+    const { articleId } = await params;
 
     if (!articleId) {
       return NextResponse.json(
