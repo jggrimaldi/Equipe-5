@@ -7,6 +7,7 @@ export const articles = pgTable("articles", {
     author: text("author"),
     category: text("category"),
     excerpt: text("excerpt"),
+    summary: text("summary"),
     views: integer("views").default(0).notNull(),
     imageUrl: text("image_url").default("https://jc.uol.com.br/img/logo.svg"),
     createdAt: timestamp("created_at").defaultNow().notNull(),

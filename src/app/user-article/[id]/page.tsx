@@ -7,6 +7,7 @@ import { UserTracker } from '@/components/UserTracker';
 import { SidebarMenu } from '@/components/SidebarMenu';
 import { UOLBar } from '@/components/UOLBar';
 import { ArticleContentWrapper } from '@/components/ArticleContentWrapper';
+import { SummaryAccordion } from '@/components/SummaryAccordion';
 import type { Metadata } from 'next';
 
 // Types
@@ -15,6 +16,7 @@ interface ArticleData {
   title: string;
   content: string;
   excerpt?: string | null;
+  summary?: string | null;
   author: string | null;
   category: string | null;
   views: number;
@@ -242,6 +244,9 @@ export default async function UserArticlePage({ params }: { params: Promise<{ id
           </div>
 
         </div>
+
+        {/* Summary Accordion */}
+        <SummaryAccordion summary={articleData.summary} />
 
         {/* Content - Client Component for Section Tracking */}
         <ArticleContentWrapper article={articleData} relatedArticles={relatedArticles} />
