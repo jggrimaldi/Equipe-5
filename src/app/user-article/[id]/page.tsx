@@ -234,6 +234,9 @@ export default async function UserArticlePage({ params }: { params: Promise<{ id
             </button>
           </div>
 
+          {/* Summary Accordion - Above Featured Image */}
+          <SummaryAccordion summary={articleData.summary} />
+
           {/* Featured Image */}
           <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg mb-8 group">
             <img
@@ -244,9 +247,6 @@ export default async function UserArticlePage({ params }: { params: Promise<{ id
           </div>
 
         </div>
-
-        {/* Summary Accordion */}
-        <SummaryAccordion summary={articleData.summary} />
 
         {/* Content - Client Component for Section Tracking */}
         <ArticleContentWrapper article={articleData} relatedArticles={relatedArticles} />
