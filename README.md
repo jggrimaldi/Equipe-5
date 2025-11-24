@@ -17,6 +17,8 @@ Apesar dos investimentos em tecnologia e UX/UI, ainda é necessário um olhar in
 ## Deploy
 [![Vídeo apresentação](https://github.com/user-attachments/assets/39f8eda6-412a-4d51-b626-da8a6b07ba9c)](https://equipe-5-vert.vercel.app)
 
+## Apresentação da aplicação completa
+[![Vídeo apresentação](https://github.com/user-attachments/assets/70ad7932-8d16-467c-8072-23ffd78f1fca)](https://drive.google.com/file/d/10ZHK_owF1TlYQaUlLrNVgZIRgAO46GWs/view)
 ## Apresentação da aplicação (em construção)
 [![Vídeo apresentação](https://github.com/user-attachments/assets/70ad7932-8d16-467c-8072-23ffd78f1fca)](https://www.youtube.com/watch?v=kju_7s9wYoE)
 
